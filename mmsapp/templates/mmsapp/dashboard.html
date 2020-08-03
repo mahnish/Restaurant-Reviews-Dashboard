@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+	<title>Restaurants in Barrie</title>
+</head>
+<body>
+
+<div >
+
+<div class="jumbotron">
+  <h1 class="display-4">Restaurant Reviews Dashboard</h1>
+  <hr class="my-4">
+  <form action="{% url 'index' %}" method="post">
+    {%csrf_token%}
+  <div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Select a restaurant
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+    <button class="dropdown-item" name="restaurant" type="submit" value="Montanas BBQ and Bar" >Montana</button>
+    <button class="dropdown-item" name="restaurant" type="submit" value="Milestones Grill and Bar">Milestones</button>
+    <button class="dropdown-item" name="restaurant" type="submit" value="Fionn Maccools">Fionns</button>
+    <button class="dropdown-item" name="restaurant" type="submit" value="Red Lobster">Red Lobster</button>
+    <button class="dropdown-item" name="restaurant" type="submit" value="Baton Rouge Steakhouse and Bar">Baton Rouge</button>
+  </div>
+</div>
+</form>
+<div class="container">
+<h1 style="text-align: center">{{name}}</h1>
+<div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+  <div style="text-align: center">
+    <img src={{image1}} style="width: 20rem;">
+    <img src={{image2}} style="width: 20rem;">
+    <img src={{image3}} style="width: 20rem;">
+  </div>
+</div>
+
+
+
+    
+<div id="container">
+  <div id="container" style="width: 50%">
+      <h3>Sentiment Analysis</h3>
+      <canvas id="pie-chart" ></canvas>
+  </div>
+  <div id ="container" style="width: 50%" >
+    <form action="{% url 'index' %}" method="post" enctype="multipart/form-data">
+    {%csrf_token%}
+    <div class="file-field">
+      <div class="d-flex justify-content-center">
+        <div class="btn btn-mdb-color btn-rounded float-left">
+          <span>Choose image</span>
+          <input type="file" name="myfile">
+          <button class="btn btn-primary" type="submit" name="image">Classify</button>
+          <ul>
+            <li>{{p0}}</li>
+            <li>{{p1}}</li>
+            <li>{{p2}}</li>
+            <li>{{p3}}</li>
+            <li>{{p4}}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </form>
+  </div>
+</div>
+
+
+
+<div>
+<h3>Reviews</h3>
+<div class="row" >
+<div class="col-md-3">
+  <div style="width: 18rem;">
+    <div class="card-body">
+      <h6 class="card-subtitle mb-2 text-muted">{{review1}}</h6>
+    </div>
+  </div>
+</div>
+<div class="col-md-3">
+  <div style="width: 18rem;">
+    <div class="card-body">
+      <h6 class="card-subtitle mb-2 text-muted">{{review2}}</h6>
+    </div>
+  </div>
+</div>
+<div class="col-md-3">
+  <div style="width: 18rem;">
+    <div class="card-body">
+      <h6 class="card-subtitle mb-2 text-muted">{{review3}}</h6>
+    </div>
+  </div>
+</div>
+<div class="col-md-3">
+  <div style="width: 18rem;">
+    <div class="card-body">
+      <h6 class="card-subtitle mb-2 text-muted">{{review4}}</h6>
+    </div>
+  </div>
+</div>
+</div>
+
+
+</div>
+
+
+
+</div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+
+<script type="text/javascript">
+var config = {
+      type: 'bar',
+      data: {
+        datasets: [{
+          barThickness:15,
+          data: [{{positive}},{{negative}},{{neutral}}],
+          backgroundColor: [
+            '#2E8B57', '#8B0000', '#FFFF99'
+          ],
+          label: 'Percentage of reviews'
+        }],
+        labels: ["positive","negative","neutral"]
+      },
+      options: {
+        responsive: true
+      }
+    };
+
+    window.onload = function() {
+      var ctx = document.getElementById('pie-chart').getContext('2d');
+      window.myPie = new Chart(ctx, config);
+    };
+
+</script>
+</body>
+</html>
